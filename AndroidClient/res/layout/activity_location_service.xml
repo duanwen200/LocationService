@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+      <HorizontalScrollView  
+      android:id="@+id/ScrollX"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:scrollbars="horizontal"   
+      android:fillViewport="true" 
+      >
+      
+		<ScrollView
+		    android:id="@+id/ScrollY"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:fillViewport="true" 
+		    android:scrollbars="vertical">
+	        <com.example.androidclient_v3.MapView
+	                android:id="@+id/map"
+                    android:enabled="true"
+                    android:clickable="true" 
+				    android:layout_gravity="center_horizontal" 
+				    android:layout_width="match_parent"
+				    android:layout_height="match_parent"/>
+          </ScrollView>
+      </HorizontalScrollView>
+    
+</LinearLayout>

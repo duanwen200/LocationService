@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="vampirefan">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+
+  <!--[if lt IE 9]>
+  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>
+        <%= title %></h1>
+    </header>
+
+    <section>
+      <h2 class="description">
+        <%= subtitle %></h2>
+      <p class="showdata">
+        <%= dbdata %></p>
+    </section>
+    <section>
+      <span class="section-title">&bull; Remove All fingerprints!</span>
+      <form action="/Db.action" method="post">
+        <input type="text" class="input" disabled="disabled" value="All Data Base">
+        <input type="text" class="db-action" name="action" value="remove-all">
+        <button type="submit">Remove</button>
+      </form>
+    </section>
+    <section>
+      <span class="section-title">&bull; Remove fingerprint by locationId!</span>
+      <form action="/Db.action" method="post">
+        <input type="text" class="input" name="locationId">
+        <input type="text" class="db-action" name="action" value="remove-by-locationId">
+        <button type="submit">Remove</button>
+      </form>
+    </section>
+  </div>
+
+  <footer role="contentinfo">
+    <center>
+      <p>
+        {SJTU Location Service Demo} - Copyright &copy; 2011-2012 - IWCT
+      </p>
+    </center>
+  </footer>
+
+  <script src="./js/lib/jquery.min.js"></script>
+</body>
+</html>

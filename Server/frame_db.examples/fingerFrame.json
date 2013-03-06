@@ -1,0 +1,23 @@
+{
+  "locationId": {
+    "buildingId": "E4",
+    "floorId": "1",
+    "roomId": "102",
+    "locationX": "1",
+    "locationY": "1"
+  },
+  "bearing": 0,
+  "wapInfo": [{
+    "bssid": "00:60:2f:3a:07:65",
+    "rssi": -69
+  }, {
+    "bssid": "00:60:2f:3a:07:15",
+    "rssi": -64
+  }, {
+    "bssid": "00:60:2f:3a:07:f5",
+    "rssi": -25
+  }, {
+    "bssid": "00:60:2f:3a:07:b5",
+    "rssi": -67
+  }]
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/dialog"
+          android:layout_height="wrap_content" 
+		  android:layout_width="wrap_content"
+		  android:background="#ffffffff" 
+		  android:orientation="vertical">
+    <LinearLayout
+          android:layout_height="wrap_content" 
+		  android:layout_width="wrap_content"
+		  android:background="#ffffffff" 
+		  android:orientation="horizontal">
+	  
+        <TextView
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:text="  BuildingID:"
+	      android:minWidth="100dip"/>
+	    <EditText
+	      android:id="@+id/buildingID"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:minWidth="100dip"/>
+    </LinearLayout>
+    <LinearLayout
+          android:layout_height="wrap_content" 
+		  android:layout_width="wrap_content"
+		  android:background="#ffffffff" 
+		  android:orientation="horizontal">
+       <TextView
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:text="  FloorID:"
+	      android:minWidth="100dip"/>
+	    <EditText
+	      android:id="@+id/floorID"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:minWidth="100dip"/>
+    </LinearLayout>
+</LinearLayout>

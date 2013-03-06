@@ -1,0 +1,140 @@
+/** { margin: 0; padding: 0; border: 0; }*/
+
+body {
+	background: url('../images/retina_dust.png') #f2f2f2;
+	color: #464646;
+	font-family: Georgia, "Helvetica Neue", Arial, STXihei, "Microsoft YaHei", "Times New Roman", sans-serif;
+}
+
+section {
+	padding-bottom: 1em;
+	padding: 0 20px;
+}
+
+::selection {
+	background: #E1FB9C;
+}
+
+header {
+	width: 100%;
+	text-align: center;
+	font-family: cursive;
+	padding-bottom: 1em;
+	border-bottom: solid #aaaaaa 3px;
+}
+
+h1 {
+	font-size: 2.2em;
+	font-weight: 600;
+	color: green;
+}
+
+
+h2 {
+	font-size: 1.6em;
+	font-weight: 500;
+	color: #515733;
+	text-align: center;
+}
+
+section {
+	border-bottom: dotted #797979 1px;
+}
+
+.section-title {
+	font-size:1.1em;
+	font-weight: 400;
+	color:#515733;
+}
+
+.showdata {
+	font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", STXihei, "Microsoft YaHei", monospace;
+	font-size: 0.9em;
+	text-align: left;
+}
+
+.center-header{
+	font-size: 1.5em;
+	padding-top: 0.5em;
+	color: #464646;
+	text-align: center;
+}
+
+footer {
+	font-size: .76em;
+	color: #464646;
+	text-shadow: white 0 1px;
+	/*border-top: 1px solid #797979;*/
+	position: relative;
+	padding-bottom: 1em;
+	margin-bottom: 3em;
+	z-index: 1;
+}
+
+
+.wrapper {
+	width: 820px;
+	margin: auto;
+	text-align: justify;
+}
+
+.app {
+	width: 100%;
+	background: rgba(230, 230, 230, 0.45);
+	text-align: center;
+	color: #888;
+	margin: 10px auto;
+	position: relative;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#map {
+	width: 100%;
+	height: 420px;
+	background: transparent;
+}
+
+.infobox {
+	background: #fff;
+	width: 320px;
+/*	padding: 40px;*/
+	line-height: 30px;
+	text-align: center;
+	position: absolute;
+	top: 150px;
+	left: 175px;
+	z-index: 10000;
+	visibility: hidden;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	box-shadow: 0 0 4px 0 #aaaaaa;
+
+	-webkit-transition: opacity .2s ease-out;
+	-moz-transition: opacity .2s ease-out;
+	transition: opacity .2s ease-out;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.infobox.error {
+	opacity: .9;
+	filter: alpha(opacity=90);
+	visibility: visible;
+}
+
+/* custom popup fonts */
+.leaflet-popup-content {
+	font: 12px 'Lato', Arial, sans-serif !important;
+}
+
+
+
+/* DB-action */
+.db-action {
+	display: none;
+}

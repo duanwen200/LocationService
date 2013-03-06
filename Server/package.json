@@ -1,0 +1,14 @@
+{
+  "name": "LocationServiceDemo",
+  "version": "3.1.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.3",
+    "socket.io": "0.9.10",
+    "ejs": "*",
+    "mongodb": "*"
+  }
+}
