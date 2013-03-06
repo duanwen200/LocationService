@@ -10,3 +10,9 @@ git commit -m "${message}"
 echo "git push origin master --force"
 git push origin master --force
 echo "git push complete"
+
+echo "pushing Docs"
+cd Docs
+./gitpull.sh
+./gitpush.sh
+echo "push Docs complete"
