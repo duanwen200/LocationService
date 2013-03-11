@@ -15,9 +15,13 @@ module.exports = Fingerprint;
 Fingerprint.prototype.insert = function insert(callback) {
   // insert to mongodb
   var fingerprint = {
-    locationId: this.locationId,
-    bearing: this.bearing,
-    wapInfo: this.wapInfo
+    locationId: this.locationId, //唯一，可以由经纬度生成
+    locationInfo: this.locationInfo, //地理位置信息（国家、城市、街道、楼、层、房间号）
+    longitude: this.longitude, //经度
+    latitude: this.latitude, //纬度
+    accuracy: this.accuracy, //精确程度
+    bearing: this.bearing, //方向
+    wapInfo: this.wapInfo //扫描得到的WAP信息，
   };
   mongodb.open(function(err, db) {
     if(err) {

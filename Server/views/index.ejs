@@ -43,28 +43,6 @@
         <div id="map">To get this app to work you need to share your geolocation.</div>
       </div>
     </section>
-
-    <!--     <section>
-    <meta name="viewport" content="width=620" />
-
-    <a href="http://www.google.com/apis/maps/" target="_top">
-      <h1 class="center-header">
-        <img src="/images/google-logo.png" width="149" height="57"></h1>
-    </a>
-    <p>
-      Using the HTML5 Geolocation API and Web Sockets to show the locations of visitors in real-time. Google maps api is the map provider.
-    </p>
-    <div class="app">
-      <div id="infobox" class="infobox"></div>
-      <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-
-      <p style="font-size:1em; text-align: center; color: #a0bd3d; display: none;">
-        Finding your location......
-        <span id="status">checking...</span>
-      </p>
-    </div>
-  </section>
-  -->
   <section>
     <h3>Some Outdoor Map APIs:</h3>
     <p>
@@ -89,7 +67,16 @@
     </p>
     <div class="app">Developing.....</div>
     <form action="/readDB" method="get">
-      <input type="submit" value="read the DataBase." />
+      <input type="submit" value="read the DataBase" />
+    </form>
+    <form action="/indoorMapUploader" method="get">
+      <input type="submit" value="Upload Indoor Map" />
+    </form>
+    <form action="/testVampirefan" method="get">
+      <input type="submit" value="Indoor Map test" />
+    </form>
+    <form action="/finger" method="get">
+      <input type="submit" value="Finger" />
     </form>
   </section>
 </article>
@@ -107,6 +94,6 @@
 <script src="./js/lib/leaflet.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="./js/leafletApplication.js"></script>
-<script src="./js/googleMapsApplication.js"></script>
+<!-- <script src="./js/googleMapsApplication.js"></script> -->
 </body>
 </html>

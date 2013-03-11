@@ -1,6 +1,7 @@
 var querystring = require('querystring');
 var Fingerprint = require('../models/fingerprint');
 var locateAlgorithms = require('./locateAlgorithms');
+var fs = require('fs');
 module.exports = function(app) {
 
   //Web Pages
@@ -49,16 +50,55 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/indoorMapUploader', function(req, res) {
+    res.render('indoorMapUploader', {
+      title: 'Upload indoor maps'
+    });
+  });
 
+  app.post('/indoorMapUploaded', function(req, res) {
+    console.log("Uploading Map.");
+    req.form.on('progress', function(bytesReceived, bytesExpected){
+      console.log(((bytesReceived / bytesExpected)*100)+"% uploaded");
+    });
+    req.form.on('end', function(){
+      console.log("parsing done");
+      var tmp_path = req.files.indoorMapUploaded.path;
+      var target_name = 'test.png';
+      var target_path = './public/indoorMaps/' + target_name;
+      fs.renameSync(tmp_path, target_path);
+      res.render('indoorMapUploaded', {
+        title: 'Uploaded indoor maps',
+        indoorMapPng: target_name
+      });
+    })
+  });
 
-  //Web Apps
-  //---------------------------------------
   app.get('/start', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
     body += '\'Finger\' for fingerpringting your current location;\n\'Locate\' for calculating your current location.\n';
     res.send(200, body);
   });
+
+  app.get('/finger', function(req, res) {
+    res.render('finger', {
+      title: 'Finger Your Location'
+    });
+  });
+
+
+  app.get('/locate', function(req, res) {
+    res.set('Content-Type', 'text/plain');
+    var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
+    body += 'Nice to see you trying to locate your current position using our database!';
+    res.send(200, body);
+  });
+
+
+
+  //Client Apps
+  //---------------------------------------
   app.post('/start', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
@@ -67,12 +107,6 @@ module.exports = function(app) {
   });
 
   //method '/finger'
-  app.get('/finger', function(req, res) {
-    res.set('Content-Type', 'text/plain');
-    var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
-    body += 'Nice to see you trying to push a finger to our database!';
-    res.send(200, body);
-  });
   app.post('/finger', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = 'You\'ve tried to push a finger to the database.\n';
@@ -112,12 +146,6 @@ module.exports = function(app) {
   });
 
   //method '/locate'
-  app.get('/locate', function(req, res) {
-    res.set('Content-Type', 'text/plain');
-    var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
-    body += 'Nice to see you trying to locate your current position using our database!';
-    res.send(200, body);
-  });
   app.post('/locate', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = 'You\'ve tried to locate your current position using our database.\n';

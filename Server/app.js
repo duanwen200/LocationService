@@ -17,7 +17,11 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({
+    keepExtensions: true,
+    limit: 10000000, //10M limit
+    defer: true //enable event
+  }));
   app.use(express.methodOverride());
   app.use(express.cookieParser('vampirefan presents'));
   app.use(express.session({

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Indoor Map Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/leaflet.css" />
+   <style>
+    #map {
+      width: 800px;
+      height: 500px;
+    }
+    .info {
+      padding: 6px 8px;
+      font: 14px/16px Arial, Helvetica, sans-serif;
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+    .info h4 {
+      margin: 0 0 5px;
+      color: #777;
+    }
+
+    .legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+    }
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div id="map" style="width: 1160px; height: 600px"></div>
+
+  <script src="./js/lib/leaflet.js"></script>
+  <script type="text/javascript" src="./js/grids.js"></script>
+  <script>
+    var map = L.map('map', {
+      center: [31.02474, 121.43318],
+      zoom: 18,
+    });
+        // leaflet API key tiler
+    L.tileLayer('http://{s}.tile.cloudmade.com/01aa77e396754ce68f494b0740c7118b/997/256/{z}/{x}/{y}.png', { maxZoom: 22, detectRetina: true }).addTo(map);
+    var imageUrl = './indoorMaps/31.02409,121.43209,1.png',
+    imageBounds = [[31.0243225, 121.43263], [31.0251225, 121.43347]];
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
+    // legend.addTo(map);
+  </script>
+  <form action="http://geowiki.com/iD/#map=18.00/31.02474/121.43318" method="get">
+        <input type="submit" value="Test Compare."/>
+  </form>
+  <form action="/indoorMapShow" method="get">
+        <input type="submit" value="Show indoorMap"/>
+  </form>
+</body>
+</html>
