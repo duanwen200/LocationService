@@ -33,7 +33,7 @@ module.exports = function(app) {
   app.get('/readDB', function(req, res) {
     var body = '';
     Fingerprint.getAll(function(error, fingerprints) {
-      if(error) {
+      if (error) {
         body += 'finger failed. invaled postData.' + error.name + ': ' + error.message;
       }
       res.render('readDB', {
@@ -57,21 +57,17 @@ module.exports = function(app) {
   });
 
   app.post('/indoorMapUploaded', function(req, res) {
-    console.log("Uploading Map.");
-    req.form.on('progress', function(bytesReceived, bytesExpected){
-      console.log(((bytesReceived / bytesExpected)*100)+"% uploaded");
-    });
-    req.form.on('end', function(){
-      console.log("parsing done");
-      var tmp_path = req.files.indoorMapUploaded.path;
-      var target_name = 'test.png';
-      var target_path = './public/indoorMaps/' + target_name;
-      fs.renameSync(tmp_path, target_path);
+    console.log("parsing done");
+    console.log(req.body);
+    var tmp_path = req.files.indoorMapUploaded.path;
+    var target_name = 'test.png';
+    var target_path = __dirname + '/../public/indoorMaps/' + target_name;
+    fs.rename(tmp_path, target_path, function() {
       res.render('indoorMapUploaded', {
         title: 'Uploaded indoor maps',
         indoorMapPng: target_name
       });
-    })
+    });
   });
 
   app.get('/start', function(req, res) {
@@ -87,15 +83,12 @@ module.exports = function(app) {
     });
   });
 
-
   app.get('/locate', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = 'You\'ve connected to SJTU Location Service Demo! Welcome! ^_^\n';
     body += 'Nice to see you trying to locate your current position using our database!';
     res.send(200, body);
   });
-
-
 
   //Client Apps
   //---------------------------------------
@@ -114,7 +107,7 @@ module.exports = function(app) {
     var fingerprintInput = req.body;
     body += 'You\'ve sent the finger: ' + JSON.stringify(fingerprintInput) + '\n';
     // conso-le.log(fingerprintInput.locationId);
-    if(fingerprintInput.locationId === undefined) {
+    if (fingerprintInput.locationId === undefined) {
       body += 'finger failed. locationId is null';
       res.send(200, body);
     } else {
@@ -124,12 +117,12 @@ module.exports = function(app) {
         wapInfo: fingerprintInput.wapInfo
       });
       Fingerprint.getOne(fingerprintInput.locationId, function(error, fingerprint) {
-        if(error) {
+        if (error) {
           body += 'finger failed. invaled postData.' + error.name + ': ' + error.message;
         }
-        if(fingerprint === null) {
+        if (fingerprint === null) {
           newFingerprint.insert(function(error) {
-            if(error) {
+            if (error) {
               body += 'finger failed. invaled postData.' + error.name + ': ' + error.message;
             }
           });
@@ -153,7 +146,7 @@ module.exports = function(app) {
     var locateFrame = req.body;
     body += 'You\'ve sent the locateFrame: ' + JSON.stringify(locateFrame) + '\n';
     locateAlgorithms.ed_advanced(body, locateFrame, function(error, body) {
-      if(error) {
+      if (error) {
         body += 'locate failed. invaled postData.' + error.name + ': ' + error.message;
       }
       res.send(200, body);
@@ -164,35 +157,34 @@ module.exports = function(app) {
     res.set('Content-Type', 'text/plain');
     var body = '';
 
-    switch(req.body.action) {
-    case 'remove-all':
-      Fingerprint.removeAll(function(error) {
-        if(error) {
-          body += 'fingerprints remove failed: ' + error.name + ': ' + error.message;
-        }
-        body += 'All fingerprints Removed';
-        //respond
+    switch (req.body.action) {
+      case 'remove-all':
+        Fingerprint.removeAll(function(error) {
+          if (error) {
+            body += 'fingerprints remove failed: ' + error.name + ': ' + error.message;
+          }
+          body += 'All fingerprints Removed';
+          //respond
+          res.send(200, body);
+          res.redirect('/readDB');
+        });
+        break;
+
+      case 'remove-by-locationId':
+        // console.log(req.body.locationId);
+        Fingerprint.removeByLocationId(req.body.locationId, function(error) {
+          if (error) {
+            body += 'fingerprint remove failed: ' + error.name + ': ' + error.message;
+          } else body += 'fingerprint which locationId=' + req.body.locationId + ' is removed successfully';
+          res.send(200, body);
+          res.redirect('/readDB');
+        });
+        break;
+
+      default:
+        body += 'No action ' + req.body.action + ' found';
         res.send(200, body);
         res.redirect('/readDB');
-      });
-      break;
-
-    case 'remove-by-locationId':
-    // console.log(req.body.locationId);
-      Fingerprint.removeByLocationId(req.body.locationId, function(error) {
-        if(error) {
-          body += 'fingerprint remove failed: ' + error.name + ': ' + error.message;
-        }
-        else body += 'fingerprint which locationId=' + req.body.locationId + ' is removed successfully';
-        res.send(200, body);
-        res.redirect('/readDB');
-      });
-      break;
-
-    default:
-      body += 'No action ' + req.body.action + ' found';
-      res.send(200, body);
-      res.redirect('/readDB');
     }
   });
 };

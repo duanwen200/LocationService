@@ -1,7 +1,7 @@
 ---
 applications:
   .:
-    name: LocationServiceDemo
+    name: LocationService
     framework:
       name: node
       info:
@@ -12,5 +12,5 @@ applications:
     mem: 64M
     instances: 1
     services:
-      mongodb-9d415:
+      mongodb-c870f:
         type: mongodb

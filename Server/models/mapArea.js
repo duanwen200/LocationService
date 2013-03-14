@@ -1,54 +1,54 @@
-// fingerprint.js
+// mapArea.js
 // by vampirefan
-// Fingerprint Model: save, findOne, findAll in mongodb
+// mapArea Model: save, findOne, findAll in mongodb
 // -----------------------------------------------------
 var mongodb = require('./db');
 
-function Fingerprint(fingerprint) {
-  this.locationId = fingerprint.locationId; //唯一，可以由经纬度生成
-  this.locationInfo = fingerprint.locationInfo; //地理位置信息（国家、城市、街道、楼、层、房间号）
-  this.longitude = fingerprint.longitude; //经度
-  this.latitude = fingerprint.latitude; //纬度
-  this.altitude = fingerprint.altitude; //海拔
-  this.accuracy = fingerprint.accuracy; //精确程度
-  this.bearing = fingerprint.bearing; //方向
-  this.wapInfo = fingerprint.wapInfo; //扫描得到的WAP信息，
+function MapArea(maparea) {
+  this.mapAreaId = maparea.mapAreaId; //唯一，可以由经纬度生成
+  this.mapAreaInfo = maparea.mapAreaInfo; //地理位置信息（国家、城市、街道、楼、层、房间号）
+  this.longitudeLD = maparea.longitudeLD; //地图左下角的经度
+  this.latitudeLD = maparea.latitudeLD; //地图左下角的纬度
+  this.longitudeRU = maparea.longitudeRU; //地图右上角的经度
+  this.latitudeRU = maparea.latitudeRU; //地图右上角的纬度
+  this.altitude = maparea.altitude; //地图所在海拔
+  this.accuracy = maparea.accuracy; //精确程度
 }
 
-module.exports = Fingerprint;
+module.exports = MapArea;
 
-Fingerprint.prototype.insert = function insert(callback) {
+MapArea.prototype.insert = function insert(callback) {
   // insert to mongodb
-  var fingerprint = {
-    locationId: this.locationId,
-    locationInfo: this.locationInfo,
-    longitude: this.longitude,
-    latitude: this.latitude,
+  var maparea = {
+    mapAreaId: this.mapAreaId,
+    mapAreaInfo: this.mapAreaInfo,
+    longitudeLD: this.longitudeLD,
+    latitudeLD: this.latitudeLD,
+    longitudeRU: this.longitudeRU,
+    latitudeRU: this.latitudeRU,
     altitude: this.altitude,
-    accuracy: this.accuracy,
-    bearing: this.bearing,
-    wapInfo: this.wapInfo
+    accuracy: this.accuracy
   };
   mongodb.open(function(err, db) {
     if(err) {
       return callback(err);
     }
     // find fingerprints collection
-    db.collection('fingerprints', function(err, collection) {
+    db.collection('mapareas', function(err, collection) {
       if(err) {
         mongodb.close();
         return callback(err);
       }
-      // add index for locationId
-      collection.ensureIndex('locationId', {
+      // add index for mapAreaId
+      collection.ensureIndex('mapAreaId', {
         unique: true
       });
-      // insert fingerprint into colletion
-      collection.insert(fingerprint, {
+      // insert maparea into colletion
+      collection.insert(maparea, {
         safe: true
-      }, function(err, fingerprint) {
+      }, function(err, maparea) {
         mongodb.close();
-        callback(err, fingerprint);
+        callback(err, maparea);
       });
     });
   });

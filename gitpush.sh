@@ -13,6 +13,5 @@ echo "git push complete"
 
 echo "pushing Docs"
 cd Docs
-./gitpull.sh
 ./gitpush.sh
 echo "push Docs complete"
