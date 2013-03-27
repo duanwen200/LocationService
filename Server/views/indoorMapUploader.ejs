@@ -4,11 +4,14 @@
 </head>
 <body>
   <form action="/indoorMapUploaded" enctype="multipart/form-data" method="post">
+    <span>mapAreaId:</span><input type="text" class="input" name="mapAreaId"></br>
+    <span>mapAreaInfo:</span><input type="text" class="input" name="mapAreaInfo"></br>
     <span>longitude-left-down-corner:</span><input type="text" class="input" name="longitudeLD"></br>
     <span>latitude-left-down-corner:</span><input type="text" class="input" name="latitudeLD"></br>
     <span>longitude-right-up-corner:</span><input type="text" class="input" name="longitudeRU"></br>
     <span>latitude-right-up-corner:</span><input type="text" class="input" name="latitudeRU"></br>
     <span>accuracy:</span><input type="text" class="input" name="accuracy"></br>
+    <span>altitude:</span><input type="text" class="input" name="altitude"></br>
     <span>mapInfo:
     <input type="file" name="indoorMapUploaded">
     <input type="submit" name="submit" value="Upload file">

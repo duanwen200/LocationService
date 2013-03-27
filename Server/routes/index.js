@@ -1,5 +1,6 @@
 var querystring = require('querystring');
 var Fingerprint = require('../models/fingerprint');
+var MapArea = require('../models/mapArea');
 var locateAlgorithms = require('./locateAlgorithms');
 var fs = require('fs');
 module.exports = function(app) {
@@ -60,7 +61,7 @@ module.exports = function(app) {
     console.log("parsing done");
     console.log(req.body);
     var tmp_path = req.files.indoorMapUploaded.path;
-    var target_name = 'test.png';
+    var target_name = req.body.mapAreaId + '.png';
     var target_path = __dirname + '/../public/indoorMaps/' + target_name;
     fs.rename(tmp_path, target_path, function() {
       res.render('indoorMapUploaded', {
@@ -68,6 +69,39 @@ module.exports = function(app) {
         indoorMapPng: target_name
       });
     });
+
+    var mapAreaInput = req.body;
+    if (mapAreaInput.mapAreaId === undefined) {
+      body += 'map upload failed. mapAreaId is null';
+      res.send(200, body);
+    } else {
+      var newMapArea = new MapArea({
+        mapAreaId: mapAreaInput.mapAreaId,
+        mapAreaInfo: mapAreaInput.mapAreaInfo,
+        longitudeLD: mapAreaInput.longitudeLD,
+        latitudeLD: mapAreaInput.latitudeLD,
+        longitudeRU: mapAreaInput.longitudeRU,
+        latitudeRU: mapAreaInput.latitudeRU,
+        altitude: mapAreaInput.altitude,
+        accuracy: mapAreaInput.accuracy
+      });
+      MapArea.getOne(mapAreaInput.mapAreaId, function(error, maparea) {
+        if (error) {
+          console.log('map upload failed. invaled postData.' + error.name + ': ' + error.message);
+        }
+        if (maparea === null) {
+          newMapArea.insert(function(error) {
+            if (error) {
+              console.log('map upload failed. invaled postData.' + error.name + ': ' + error.message);
+            }
+          });
+          console.log('map upload complete.');
+          console.log('mongodb has a new maparea:\n' + 'mapAreaId=' + mapAreaInput.mapAreaId);
+        } else {
+          console.log('map upload failed. mapAreaId exists.');
+        }
+      });
+    }
   });
 
   app.get('/start', function(req, res) {
@@ -153,7 +187,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/Db.action', function(req, res) {
+  app.post('/Db.fingerprint.action', function(req, res) {
     res.set('Content-Type', 'text/plain');
     var body = '';
 

@@ -33,7 +33,7 @@ MapArea.prototype.insert = function insert(callback) {
     if(err) {
       return callback(err);
     }
-    // find fingerprints collection
+    // find mapareas collection
     db.collection('mapareas', function(err, collection) {
       if(err) {
         mongodb.close();
@@ -54,127 +54,29 @@ MapArea.prototype.insert = function insert(callback) {
   });
 };
 
-Fingerprint.getOne = function getOne(getLocationId, callback) {
+MapArea.getOne = function getOne(getMapAreaId, callback) {
   mongodb.open(function(err, db) {
     if(err) {
       return callback(err);
     }
-    // find fingerprints collection
-    db.collection('fingerprints', function(err, collection) {
+    // find mapareas collection
+    db.collection('mapareas', function(err, collection) {
       if(err) {
         mongodb.close();
         return callback(err);
       }
-      // find docs which locationId = getLocationId
+      // find docs which mapAreaId = getMapAreaId
       collection.findOne({
-        locationId: getLocationId
+        mapAreaId: getMapAreaId
       }, function(err, doc) {
         mongodb.close();
         if(doc) {
-          // Object Fingerprint
-          var fingerprint = new Fingerprint(doc);
-          return callback(err, fingerprint);
+          // Object MapArea
+          var maparea = new MapArea(doc);
+          return callback(err, maparea);
         } else {
           return callback(err, null);
         }
-      });
-    });
-  });
-};
-
-Fingerprint.getByWapBssids = function getByWapBssids(wapBssids, callback) {
-  mongodb.open(function(err, db) {
-    if(err) {
-      return callback(err);
-    }
-    // find fingerprint collection
-    db.collection('fingerprints', function(err, collection) {
-      if(err) {
-        mongodb.close();
-        return callback(err);
-      }
-      // find docs which WapInfo.bssid $in getWapInfo.bssids
-      collection.find({
-        "wapInfo.bssid": {
-          "$in": wapBssids
-        }
-      }).toArray(function(err, docs) {
-        mongodb.close();
-        if(docs) {
-          // Object Fingerprint
-          var fingerprints = docs;
-          return callback(err, fingerprints);
-        } else {
-          return callback(err, null);
-        }
-      });
-    });
-  });
-};
-
-Fingerprint.getAll = function getAll(callback) {
-  mongodb.open(function(err, db) {
-    if(err) {
-      return callback(err);
-    }
-    // find fingerprint collection
-    db.collection('fingerprints', function(err, collection) {
-      if(err) {
-        mongodb.close();
-        return callback(err);
-      }
-      // find docs which locationId = fingerprint.locationId
-      collection.find().toArray(function(err, docs) {
-        mongodb.close();
-        if(docs) {
-          // Object Fingerprint
-          var fingerprints = docs;
-          return callback(err, fingerprints);
-        } else {
-          return callback(err, null);
-        }
-      });
-    });
-  });
-};
-
-
-Fingerprint.removeAll = function removeAll(callback) {
-  mongodb.open(function(err, db) {
-    if(err) {
-      return callback(err);
-    }
-    // find fingerprint collection
-    db.collection('fingerprints', function(err, collection) {
-      if(err) {
-        mongodb.close();
-        return callback(err);
-      }
-      // remove all fingerprints
-      collection.remove();
-      mongodb.close();
-      return callback(err);
-    });
-  });
-};
-
-Fingerprint.removeByLocationId = function removeByLocationId(getLocationId, callback) {
-  mongodb.open(function(err, db) {
-    if(err) {
-      return callback(err);
-    }
-    // find fingerprints collection
-    db.collection('fingerprints', function(err, collection) {
-      if(err) {
-        mongodb.close();
-        return callback(err);
-      }
-      // find docs which locationId = getLocationId
-      collection.remove({
-        locationId: getLocationId
-      }, function(err) {
-        mongodb.close();
-      return callback(err);
       });
     });
   });
